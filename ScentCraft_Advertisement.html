@@ -1,0 +1,1157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ScentCraft – Your Scent. Your Story.</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --navy: #0d1b2e;
+    --navy-mid: #162436;
+    --gold: #c9a84c;
+    --gold-light: #e8c97a;
+    --gold-pale: #f5e6c8;
+    --cream: #fdf8f0;
+    --white: #ffffff;
+  }
+
+  html, body {
+    width: 100%; min-height: 100vh;
+    background: var(--navy);
+    font-family: 'Montserrat', sans-serif;
+    color: var(--white);
+    overflow-x: hidden;
+  }
+
+  /* ── NOISE TEXTURE OVERLAY ── */
+  body::before {
+    content: '';
+    position: fixed; inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none; z-index: 0; opacity: 0.5;
+  }
+
+  /* ════════════════════════════════
+     SECTION 1 — HERO
+  ════════════════════════════════ */
+  .hero {
+    position: relative;
+    min-height: 100vh;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+    overflow: hidden;
+    padding: 60px 80px;
+    gap: 40px;
+  }
+
+  /* Radial glow */
+  .hero::after {
+    content: '';
+    position: absolute;
+    width: 700px; height: 700px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(201,168,76,0.12) 0%, transparent 70%);
+    top: 50%; right: 5%;
+    transform: translateY(-50%);
+    pointer-events: none;
+  }
+
+  /* decorative horizontal lines */
+  .hero-lines {
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 100%;
+    pointer-events: none; z-index: 0;
+  }
+  .hero-lines span {
+    display: block;
+    position: absolute;
+    left: 0; width: 100%; height: 0.5px;
+    background: rgba(201,168,76,0.08);
+  }
+
+  .hero-left { position: relative; z-index: 2; }
+
+  .hero-eyebrow {
+    display: inline-flex; align-items: center; gap: 10px;
+    margin-bottom: 24px;
+    animation: fadeUp 0.8s ease both;
+  }
+  .hero-eyebrow-line {
+    width: 40px; height: 1px; background: var(--gold);
+  }
+  .hero-eyebrow-text {
+    font-size: 10px; font-weight: 600; letter-spacing: 0.25em;
+    text-transform: uppercase; color: var(--gold);
+  }
+
+  .hero-brand {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(64px, 8vw, 96px);
+    font-weight: 300;
+    line-height: 0.92;
+    color: var(--white);
+    margin-bottom: 8px;
+    animation: fadeUp 0.8s 0.1s ease both;
+  }
+  .hero-brand em {
+    font-style: italic;
+    color: var(--gold);
+  }
+
+  .hero-sub {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 15px; font-weight: 300;
+    letter-spacing: 0.2em; text-transform: uppercase;
+    color: rgba(255,255,255,0.45);
+    margin-bottom: 36px;
+    animation: fadeUp 0.8s 0.2s ease both;
+  }
+
+  .hero-desc {
+    font-size: 13px; font-weight: 300; line-height: 1.8;
+    color: rgba(255,255,255,0.6);
+    max-width: 380px;
+    margin-bottom: 40px;
+    animation: fadeUp 0.8s 0.3s ease both;
+  }
+
+  .hero-price {
+    display: flex; align-items: baseline; gap: 6px;
+    margin-bottom: 36px;
+    animation: fadeUp 0.8s 0.35s ease both;
+  }
+  .hero-price-from {
+    font-size: 11px; font-weight: 500; letter-spacing: 0.1em;
+    color: rgba(255,255,255,0.4); text-transform: uppercase;
+  }
+  .hero-price-amt {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 48px; font-weight: 600; line-height: 1;
+    color: var(--gold);
+  }
+  .hero-price-note {
+    font-size: 11px; color: rgba(255,255,255,0.35);
+  }
+
+  .hero-cta-row {
+    display: flex; align-items: center; gap: 20px;
+    animation: fadeUp 0.8s 0.4s ease both;
+  }
+  .btn-primary {
+    display: inline-flex; align-items: center; gap: 10px;
+    background: var(--gold); color: var(--navy);
+    padding: 14px 32px; border-radius: 2px;
+    font-size: 11px; font-weight: 600; letter-spacing: 0.18em;
+    text-transform: uppercase; text-decoration: none;
+    cursor: pointer; border: none;
+    transition: background 0.2s, transform 0.15s;
+  }
+  .btn-primary:hover { background: var(--gold-light); transform: translateY(-1px); }
+  .btn-primary svg { width: 14px; height: 14px; }
+
+  .btn-ghost {
+    display: inline-flex; align-items: center; gap: 8px;
+    color: rgba(255,255,255,0.55);
+    font-size: 11px; font-weight: 500; letter-spacing: 0.12em;
+    text-transform: uppercase; text-decoration: none; cursor: pointer;
+    transition: color 0.2s;
+  }
+  .btn-ghost:hover { color: var(--gold); }
+  .btn-ghost svg { width: 12px; }
+
+  /* ── BOTTLE ILLUSTRATION ── */
+  .hero-right {
+    position: relative; z-index: 2;
+    display: flex; align-items: center; justify-content: center;
+    animation: fadeUp 0.9s 0.2s ease both;
+  }
+
+  .bottle-stage {
+    position: relative;
+    width: 360px; height: 480px;
+    display: flex; align-items: center; justify-content: center;
+  }
+
+  /* glow ring behind bottle */
+  .bottle-glow {
+    position: absolute;
+    width: 260px; height: 260px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(201,168,76,0.18) 0%, transparent 70%);
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    animation: pulseGlow 4s ease-in-out infinite;
+  }
+
+  /* decorative circle ring */
+  .bottle-ring {
+    position: absolute;
+    width: 300px; height: 300px;
+    border-radius: 50%;
+    border: 0.5px solid rgba(201,168,76,0.2);
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+  }
+  .bottle-ring-2 {
+    width: 380px; height: 380px;
+    border-color: rgba(201,168,76,0.08);
+  }
+
+  .bottle-svg-wrap {
+    position: relative; z-index: 2;
+    animation: float 6s ease-in-out infinite;
+  }
+
+  /* ── FEATURES STRIP ── */
+  .features-strip {
+    display: flex;
+    border-top: 0.5px solid rgba(201,168,76,0.15);
+    border-bottom: 0.5px solid rgba(201,168,76,0.15);
+  }
+  .feat-item {
+    flex: 1;
+    padding: 28px 32px;
+    border-right: 0.5px solid rgba(201,168,76,0.12);
+    display: flex; align-items: flex-start; gap: 16px;
+    position: relative; z-index: 2;
+    transition: background 0.3s;
+  }
+  .feat-item:last-child { border-right: none; }
+  .feat-item:hover { background: rgba(201,168,76,0.04); }
+
+  .feat-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 36px; font-weight: 300;
+    color: rgba(201,168,76,0.25);
+    line-height: 1; flex-shrink: 0; margin-top: -4px;
+  }
+  .feat-body {}
+  .feat-title {
+    font-size: 11px; font-weight: 600; letter-spacing: 0.15em;
+    text-transform: uppercase; color: var(--gold);
+    margin-bottom: 5px;
+  }
+  .feat-desc {
+    font-size: 12px; font-weight: 300; line-height: 1.6;
+    color: rgba(255,255,255,0.5);
+  }
+
+  /* ════════════════════════════════
+     SECTION 2 — PRODUCT CARDS
+  ════════════════════════════════ */
+  .section-products {
+    padding: 100px 80px;
+    position: relative; z-index: 2;
+  }
+
+  .section-header {
+    display: flex; align-items: flex-end;
+    justify-content: space-between;
+    margin-bottom: 60px;
+  }
+  .section-eyebrow {
+    display: flex; align-items: center; gap: 10px;
+    margin-bottom: 12px;
+  }
+  .section-eyebrow-line { width: 32px; height: 1px; background: var(--gold); }
+  .section-eyebrow-text {
+    font-size: 10px; font-weight: 600; letter-spacing: 0.25em;
+    text-transform: uppercase; color: var(--gold);
+  }
+  .section-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(36px, 4vw, 52px); font-weight: 300;
+    line-height: 1.1; color: var(--white);
+  }
+  .section-title em { font-style: italic; color: var(--gold); }
+
+  .collection-note {
+    font-size: 11px; font-weight: 400; letter-spacing: 0.08em;
+    color: rgba(255,255,255,0.35); max-width: 200px; text-align: right;
+    line-height: 1.7;
+  }
+
+  .products-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2px;
+  }
+
+  .product-card {
+    background: var(--navy-mid);
+    border: 0.5px solid rgba(201,168,76,0.12);
+    padding: 40px 32px;
+    position: relative; overflow: hidden;
+    cursor: pointer;
+    transition: border-color 0.3s, background 0.3s;
+  }
+  .product-card:hover {
+    border-color: rgba(201,168,76,0.4);
+    background: rgba(201,168,76,0.04);
+  }
+  .product-card:hover .card-arrow { opacity: 1; transform: translate(0,0); }
+  .product-card:hover .card-bg-num { opacity: 0.06; }
+
+  /* big bg number watermark */
+  .card-bg-num {
+    position: absolute;
+    right: -10px; bottom: -20px;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 140px; font-weight: 700;
+    color: var(--gold);
+    opacity: 0.03;
+    line-height: 1;
+    pointer-events: none;
+    transition: opacity 0.3s;
+    user-select: none;
+  }
+
+  .card-tag {
+    display: inline-block;
+    font-size: 9px; font-weight: 600; letter-spacing: 0.2em;
+    text-transform: uppercase; color: var(--navy);
+    background: var(--gold); padding: 3px 10px;
+    margin-bottom: 20px;
+  }
+  .card-tag.outline {
+    background: transparent; color: var(--gold);
+    border: 0.5px solid var(--gold);
+  }
+
+  .card-icon { margin-bottom: 20px; }
+  .card-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 28px; font-weight: 400; line-height: 1.15;
+    color: var(--white); margin-bottom: 8px;
+  }
+  .card-subtitle {
+    font-size: 10px; font-weight: 500; letter-spacing: 0.14em;
+    text-transform: uppercase; color: rgba(255,255,255,0.35);
+    margin-bottom: 16px;
+  }
+  .card-desc {
+    font-size: 12px; font-weight: 300; line-height: 1.7;
+    color: rgba(255,255,255,0.5); margin-bottom: 24px;
+  }
+  .card-price {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 32px; font-weight: 600;
+    color: var(--gold); line-height: 1;
+  }
+  .card-price span {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 11px; font-weight: 400;
+    color: rgba(255,255,255,0.4); margin-left: 4px;
+  }
+
+  .card-arrow {
+    position: absolute; top: 36px; right: 32px;
+    opacity: 0; transform: translate(-4px, 4px);
+    transition: opacity 0.3s, transform 0.3s;
+    color: var(--gold);
+  }
+
+  /* ════════════════════════════════
+     SECTION 3 — OFFER BANNER
+  ════════════════════════════════ */
+  .offer-banner {
+    margin: 0 80px 100px;
+    background: var(--gold);
+    padding: 56px 80px;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: center;
+    gap: 40px;
+    position: relative; overflow: hidden; z-index: 2;
+  }
+  .offer-banner::before {
+    content: 'SC';
+    position: absolute;
+    right: -20px; top: 50%;
+    transform: translateY(-50%);
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 220px; font-weight: 700;
+    color: rgba(0,0,0,0.06);
+    line-height: 1; pointer-events: none;
+    user-select: none;
+  }
+  .offer-kicker {
+    font-size: 10px; font-weight: 600; letter-spacing: 0.25em;
+    text-transform: uppercase; color: var(--navy);
+    opacity: 0.6; margin-bottom: 10px;
+  }
+  .offer-headline {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(32px, 4vw, 52px); font-weight: 300;
+    color: var(--navy); line-height: 1.1;
+  }
+  .offer-headline strong { font-weight: 700; }
+  .offer-sub {
+    font-size: 12px; font-weight: 400;
+    color: rgba(13,27,46,0.6); margin-top: 10px;
+    line-height: 1.6;
+  }
+  .offer-cta {
+    display: inline-flex; align-items: center; gap: 12px;
+    background: var(--navy); color: var(--gold);
+    padding: 16px 36px; font-size: 11px; font-weight: 600;
+    letter-spacing: 0.18em; text-transform: uppercase;
+    cursor: pointer; border: none; white-space: nowrap;
+    transition: background 0.2s;
+    flex-shrink: 0;
+  }
+  .offer-cta:hover { background: #0a1524; }
+
+  /* ════════════════════════════════
+     SECTION 4 — WHY SCENTCRAFT
+  ════════════════════════════════ */
+  .section-why {
+    padding: 100px 80px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 100px;
+    align-items: center;
+    position: relative; z-index: 2;
+  }
+
+  .why-left {}
+  .why-headline {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(40px, 5vw, 64px); font-weight: 300;
+    line-height: 1.05; color: var(--white); margin-bottom: 24px;
+  }
+  .why-headline em { font-style: italic; color: var(--gold); }
+  .why-body {
+    font-size: 13px; font-weight: 300; line-height: 1.9;
+    color: rgba(255,255,255,0.5); margin-bottom: 36px;
+  }
+
+  .stat-row { display: flex; gap: 48px; }
+  .stat {}
+  .stat-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 52px; font-weight: 300;
+    color: var(--gold); line-height: 1;
+    margin-bottom: 4px;
+  }
+  .stat-num sup { font-size: 24px; }
+  .stat-label {
+    font-size: 10px; font-weight: 500; letter-spacing: 0.14em;
+    text-transform: uppercase; color: rgba(255,255,255,0.35);
+  }
+
+  .why-right { display: flex; flex-direction: column; gap: 2px; }
+
+  .why-item {
+    padding: 24px 28px;
+    border: 0.5px solid rgba(201,168,76,0.12);
+    display: flex; gap: 20px; align-items: flex-start;
+    transition: background 0.3s, border-color 0.3s;
+    cursor: default;
+  }
+  .why-item:hover {
+    background: rgba(201,168,76,0.05);
+    border-color: rgba(201,168,76,0.3);
+  }
+  .why-item-dot {
+    width: 6px; height: 6px;
+    border-radius: 50%; background: var(--gold);
+    flex-shrink: 0; margin-top: 6px;
+  }
+  .why-item-title {
+    font-size: 12px; font-weight: 600; letter-spacing: 0.1em;
+    text-transform: uppercase; color: var(--white);
+    margin-bottom: 4px;
+  }
+  .why-item-desc {
+    font-size: 12px; font-weight: 300; line-height: 1.6;
+    color: rgba(255,255,255,0.45);
+  }
+
+  /* ════════════════════════════════
+     SECTION 5 — INSTAGRAM AD (SOCIAL)
+  ════════════════════════════════ */
+  .section-social {
+    padding: 100px 80px;
+    position: relative; z-index: 2;
+    background: rgba(201,168,76,0.03);
+    border-top: 0.5px solid rgba(201,168,76,0.1);
+  }
+
+  .social-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+    margin-top: 60px;
+  }
+
+  /* Instagram frame */
+  .ig-card {
+    background: #fafafa;
+    border-radius: 12px;
+    overflow: hidden;
+    border: 1px solid #dbdbdb;
+    color: #1a1a1a;
+  }
+  .ig-topbar {
+    display: flex; align-items: center; gap: 8px;
+    padding: 10px 14px;
+    border-bottom: 0.5px solid #efefef;
+  }
+  .ig-avatar-ring {
+    width: 30px; height: 30px; border-radius: 50%;
+    padding: 2px;
+    background: linear-gradient(135deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);
+  }
+  .ig-avatar-inner {
+    width: 100%; height: 100%; border-radius: 50%;
+    background: linear-gradient(135deg, var(--navy), #c9a84c);
+    display: flex; align-items: center; justify-content: center;
+    border: 2px solid #fafafa;
+    font-size: 9px; font-weight: 600; color: #fff;
+  }
+  .ig-meta { flex: 1; }
+  .ig-handle { font-size: 11px; font-weight: 600; color: #1a1a1a; }
+  .ig-sp { font-size: 9px; color: #8e8e8e; }
+  .ig-more { color: #8e8e8e; font-size: 16px; font-weight: 700; }
+
+  /* card image area */
+  .ig-img {
+    width: 100%; aspect-ratio: 1/1;
+    display: flex; align-items: center; justify-content: center;
+    position: relative; overflow: hidden;
+  }
+  .ig-img.navy-bg { background: var(--navy); }
+  .ig-img.gold-bg { background: linear-gradient(135deg, #c9a84c, #e8c97a); }
+  .ig-img.dark-bg { background: #0a1524; }
+
+  .ig-img-content {
+    position: relative; z-index: 2;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    padding: 20px; text-align: center; width: 100%;
+  }
+
+  .ig-glow-orb {
+    position: absolute;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(201,168,76,0.3) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .ig-card-actions {
+    padding: 8px 14px 4px;
+    display: flex; gap: 12px; align-items: center;
+  }
+  .ig-icon { font-size: 20px; }
+  .ig-bookmark { margin-left: auto; }
+  .ig-likes { padding: 2px 14px; font-size: 11px; font-weight: 600; color: #1a1a1a; }
+  .ig-caption { padding: 2px 14px 14px; font-size: 11px; color: #1a1a1a; line-height: 1.5; }
+  .ig-caption b { font-weight: 600; }
+  .ig-tags { color: #00376b; }
+
+  /* ════════════════════════════════
+     SECTION 6 — FOOTER / CTA
+  ════════════════════════════════ */
+  .section-footer {
+    padding: 100px 80px 60px;
+    border-top: 0.5px solid rgba(201,168,76,0.15);
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: center;
+    position: relative; z-index: 2;
+  }
+
+  .footer-brand {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 60px; font-weight: 300;
+    color: var(--white); line-height: 0.9;
+    margin-bottom: 12px;
+  }
+  .footer-brand em { font-style: italic; color: var(--gold); }
+  .footer-tagline {
+    font-size: 11px; font-weight: 400; letter-spacing: 0.2em;
+    color: rgba(255,255,255,0.35); text-transform: uppercase;
+    margin-bottom: 32px;
+  }
+  .footer-contact { display: flex; flex-direction: column; gap: 10px; }
+  .footer-contact-item {
+    display: flex; align-items: center; gap: 10px;
+    font-size: 12px; font-weight: 300; color: rgba(255,255,255,0.5);
+  }
+  .footer-contact-dot {
+    width: 4px; height: 4px; border-radius: 50%; background: var(--gold);
+    flex-shrink: 0;
+  }
+
+  .footer-right { display: flex; flex-direction: column; align-items: flex-start; gap: 24px; }
+  .footer-cta-label {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 36px; font-weight: 300;
+    line-height: 1.2; color: var(--white);
+  }
+  .footer-cta-label em { font-style: italic; color: var(--gold); }
+
+  .footer-cta-btn {
+    display: inline-flex; align-items: center; gap: 12px;
+    background: var(--gold); color: var(--navy);
+    padding: 16px 40px; font-size: 11px; font-weight: 600;
+    letter-spacing: 0.2em; text-transform: uppercase;
+    cursor: pointer; border: none;
+    transition: background 0.2s, transform 0.15s;
+  }
+  .footer-cta-btn:hover { background: var(--gold-light); transform: translateY(-2px); }
+
+  .footer-bottom {
+    grid-column: 1/-1;
+    padding-top: 48px;
+    border-top: 0.5px solid rgba(201,168,76,0.1);
+    display: flex; justify-content: space-between; align-items: center;
+  }
+  .footer-copy {
+    font-size: 10px; font-weight: 400; letter-spacing: 0.08em;
+    color: rgba(255,255,255,0.25);
+  }
+  .footer-info {
+    font-size: 10px; color: rgba(255,255,255,0.2);
+    text-align: right; line-height: 1.6;
+  }
+
+  /* ── ANIMATIONS ── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50%       { transform: translateY(-14px); }
+  }
+  @keyframes pulseGlow {
+    0%, 100% { opacity: 0.7; transform: translate(-50%,-50%) scale(1); }
+    50%       { opacity: 1;   transform: translate(-50%,-50%) scale(1.12); }
+  }
+
+  /* ── SCROLL FADE ── */
+  .reveal {
+    opacity: 0; transform: translateY(30px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+  .reveal-d1 { transition-delay: 0.1s; }
+  .reveal-d2 { transition-delay: 0.2s; }
+  .reveal-d3 { transition-delay: 0.3s; }
+</style>
+</head>
+<body>
+
+<!-- ══════════════════════════════
+     HERO
+══════════════════════════════ -->
+<section class="hero">
+  <div class="hero-lines">
+    <span style="top:20%"></span>
+    <span style="top:40%"></span>
+    <span style="top:60%"></span>
+    <span style="top:80%"></span>
+  </div>
+
+  <div class="hero-left">
+    <div class="hero-eyebrow">
+      <div class="hero-eyebrow-line"></div>
+      <div class="hero-eyebrow-text">Introducing ScentCraft</div>
+    </div>
+
+    <h1 class="hero-brand">Scent<em>Craft</em></h1>
+    <p class="hero-sub">Custom Fragrance Studio · Pakistan</p>
+
+    <p class="hero-desc">
+      Tired of paying Rs.&nbsp;15,000+ for a luxury scent you didn't even choose?
+      Craft your own signature fragrance — long-lasting, oil-based, beautifully
+      packaged — at a price built for you.
+    </p>
+
+    <div class="hero-price">
+      <span class="hero-price-from">Starting from</span>
+      <span class="hero-price-amt">Rs. 2,000</span>
+      <span class="hero-price-note">/ 30ml</span>
+    </div>
+
+    <div class="hero-cta-row">
+      <button class="btn-primary">
+        Order Now
+        <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5">
+          <path d="M2 7h10M8 3l4 4-4 4"/>
+        </svg>
+      </button>
+      <a class="btn-ghost" href="#">
+        DM on Instagram
+        <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5">
+          <path d="M2 6h8M6 2l4 4-4 4"/>
+        </svg>
+      </a>
+    </div>
+  </div>
+
+  <div class="hero-right">
+    <div class="bottle-stage">
+      <div class="bottle-glow"></div>
+      <div class="bottle-ring"></div>
+      <div class="bottle-ring bottle-ring-2"></div>
+      <div class="bottle-svg-wrap">
+        <svg width="220" height="340" viewBox="0 0 220 340" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <!-- cap -->
+          <rect x="82" y="8" width="56" height="36" rx="6" fill="#c9a84c"/>
+          <rect x="88" y="8" width="8" height="36" rx="2" fill="rgba(255,255,255,0.15)"/>
+          <!-- sprayer nozzle -->
+          <rect x="108" y="2" width="24" height="10" rx="4" fill="#c9a84c" opacity="0.9"/>
+          <!-- neck -->
+          <rect x="90" y="44" width="40" height="24" rx="4" fill="#c9a84c" opacity="0.75"/>
+          <!-- body -->
+          <rect x="40" y="68" width="140" height="240" rx="16" fill="rgba(201,168,76,0.08)" stroke="#c9a84c" stroke-width="1"/>
+          <!-- liquid -->
+          <rect x="42" y="190" width="136" height="116" rx="14" fill="rgba(201,168,76,0.18)"/>
+          <!-- shine left -->
+          <rect x="44" y="72" width="18" height="100" rx="9" fill="rgba(255,255,255,0.06)"/>
+          <!-- label frame -->
+          <rect x="54" y="88" width="112" height="130" rx="8" fill="rgba(255,255,255,0.04)" stroke="rgba(201,168,76,0.25)" stroke-width="0.75"/>
+          <!-- label content -->
+          <rect x="66" y="104" width="88" height="1" fill="rgba(201,168,76,0.5)"/>
+          <text x="110" y="136" font-family="'Cormorant Garamond', serif" font-size="22" font-weight="300" fill="#c9a84c" text-anchor="middle">ScentCraft</text>
+          <text x="110" y="154" font-family="'Montserrat', sans-serif" font-size="7" font-weight="500" fill="rgba(255,255,255,0.35)" text-anchor="middle" letter-spacing="3">CUSTOM FRAGRANCE</text>
+          <rect x="80" y="164" width="60" height="0.5" fill="rgba(201,168,76,0.3)"/>
+          <text x="110" y="180" font-family="'Montserrat', sans-serif" font-size="7" fill="rgba(255,255,255,0.25)" text-anchor="middle" letter-spacing="2">OIL-BASED · 30ml</text>
+          <rect x="66" y="200" width="88" height="1" fill="rgba(201,168,76,0.5)"/>
+          <!-- bottom shadow -->
+          <ellipse cx="110" cy="308" rx="54" ry="8" fill="#c9a84c" opacity="0.1"/>
+          <!-- spray droplets -->
+          <circle cx="168" cy="36" r="2.5" fill="#c9a84c" opacity="0.4"/>
+          <circle cx="178" cy="28" r="1.5" fill="#c9a84c" opacity="0.25"/>
+          <circle cx="172" cy="22" r="1" fill="#c9a84c" opacity="0.18"/>
+          <circle cx="182" cy="38" r="1.5" fill="#c9a84c" opacity="0.2"/>
+        </svg>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── FEATURES STRIP ── -->
+<div class="features-strip">
+  <div class="feat-item">
+    <div class="feat-num">01</div>
+    <div class="feat-body">
+      <div class="feat-title">8–12 Hour Longevity</div>
+      <div class="feat-desc">Concentrated oil-based formula that outlasts any spray alternative</div>
+    </div>
+  </div>
+  <div class="feat-item">
+    <div class="feat-num">02</div>
+    <div class="feat-body">
+      <div class="feat-title">Fully Customizable</div>
+      <div class="feat-desc">Pick your base, middle and top notes — we blend your signature scent</div>
+    </div>
+  </div>
+  <div class="feat-item">
+    <div class="feat-num">03</div>
+    <div class="feat-body">
+      <div class="feat-title">Eco-Friendly Refill</div>
+      <div class="feat-desc">Return your bottle, get a refill at 35% less — zero waste luxury</div>
+    </div>
+  </div>
+  <div class="feat-item">
+    <div class="feat-num">04</div>
+    <div class="feat-body">
+      <div class="feat-title">Gift-Ready Packaging</div>
+      <div class="feat-desc">Premium matte-finish bottles with ribbon-tied gift boxes</div>
+    </div>
+  </div>
+  <div class="feat-item">
+    <div class="feat-num">05</div>
+    <div class="feat-body">
+      <div class="feat-title">Halal Certified</div>
+      <div class="feat-desc">Alcohol-free, skin-safe oils — consciously crafted for everyone</div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════
+     PRODUCT CARDS
+══════════════════════════════ -->
+<section class="section-products">
+  <div class="section-header reveal">
+    <div>
+      <div class="section-eyebrow">
+        <div class="section-eyebrow-line"></div>
+        <div class="section-eyebrow-text">Our Collections</div>
+      </div>
+      <h2 class="section-title">Signature<br><em>Scent Collections</em></h2>
+    </div>
+    <p class="collection-note">Six curated collections — or build your own from scratch</p>
+  </div>
+
+  <div class="products-grid">
+    <div class="product-card reveal reveal-d1">
+      <div class="card-bg-num">01</div>
+      <div class="card-tag">Best Seller</div>
+      <div class="card-icon">
+        <svg width="32" height="42" viewBox="0 0 32 42" fill="none">
+          <rect x="12" y="1" width="8" height="6" rx="2" fill="#c9a84c" opacity="0.8"/>
+          <rect x="13" y="7" width="6" height="5" rx="1" fill="#c9a84c" opacity="0.6"/>
+          <rect x="4" y="12" width="24" height="28" rx="4" stroke="#c9a84c" stroke-width="0.75" fill="rgba(201,168,76,0.06)"/>
+          <rect x="6" y="22" width="20" height="16" rx="3" fill="rgba(201,168,76,0.15)"/>
+          <rect x="8" y="16" width="16" height="0.5" fill="rgba(201,168,76,0.5)"/>
+          <text x="16" y="31" font-family="serif" font-size="7" fill="#c9a84c" text-anchor="middle">Oud</text>
+        </svg>
+      </div>
+      <div class="card-name">Royal Oud</div>
+      <div class="card-subtitle">Deep · Woody · Oriental</div>
+      <div class="card-desc">A commanding blend of dark oud, sandalwood, and amber resin — for those who make an entrance.</div>
+      <div class="card-price">Rs. 2,500 <span>/ 30ml</span></div>
+      <div class="card-arrow">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.2">
+          <path d="M4 10h12M12 6l4 4-4 4"/>
+        </svg>
+      </div>
+    </div>
+
+    <div class="product-card reveal reveal-d2">
+      <div class="card-bg-num">02</div>
+      <div class="card-tag outline">New</div>
+      <div class="card-icon">
+        <svg width="32" height="42" viewBox="0 0 32 42" fill="none">
+          <rect x="12" y="1" width="8" height="6" rx="2" fill="#c9a84c" opacity="0.8"/>
+          <rect x="13" y="7" width="6" height="5" rx="1" fill="#c9a84c" opacity="0.6"/>
+          <rect x="4" y="12" width="24" height="28" rx="4" stroke="#c9a84c" stroke-width="0.75" fill="rgba(201,168,76,0.06)"/>
+          <rect x="6" y="22" width="20" height="16" rx="3" fill="rgba(201,168,76,0.12)"/>
+          <circle cx="16" cy="22" r="5" stroke="rgba(201,168,76,0.4)" stroke-width="0.5" fill="none"/>
+          <circle cx="16" cy="22" r="2" fill="rgba(201,168,76,0.3)"/>
+        </svg>
+      </div>
+      <div class="card-name">Blooming Garden</div>
+      <div class="card-subtitle">Floral · Fresh · Romantic</div>
+      <div class="card-desc">Rose, jasmine and white musk — a fragrance as delicate as a morning in spring.</div>
+      <div class="card-price">Rs. 2,200 <span>/ 30ml</span></div>
+      <div class="card-arrow">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.2">
+          <path d="M4 10h12M12 6l4 4-4 4"/>
+        </svg>
+      </div>
+    </div>
+
+    <div class="product-card reveal reveal-d3">
+      <div class="card-bg-num">03</div>
+      <div class="card-tag">Custom</div>
+      <div class="card-icon">
+        <svg width="32" height="42" viewBox="0 0 32 42" fill="none">
+          <rect x="12" y="1" width="8" height="6" rx="2" fill="#c9a84c" opacity="0.8"/>
+          <rect x="13" y="7" width="6" height="5" rx="1" fill="#c9a84c" opacity="0.6"/>
+          <rect x="4" y="12" width="24" height="28" rx="4" stroke="#c9a84c" stroke-width="0.75" fill="rgba(201,168,76,0.06)"/>
+          <line x1="10" y1="24" x2="22" y2="24" stroke="#c9a84c" stroke-width="0.75" opacity="0.5"/>
+          <line x1="10" y1="28" x2="18" y2="28" stroke="#c9a84c" stroke-width="0.75" opacity="0.35"/>
+          <line x1="10" y1="32" x2="20" y2="32" stroke="#c9a84c" stroke-width="0.75" opacity="0.25"/>
+          <circle cx="22" cy="19" r="3" stroke="#c9a84c" stroke-width="0.75" fill="none"/>
+          <path d="M20 19h4M22 17v4" stroke="#c9a84c" stroke-width="0.75"/>
+        </svg>
+      </div>
+      <div class="card-name">Build Your Scent</div>
+      <div class="card-subtitle">Your Notes · Your Formula</div>
+      <div class="card-desc">Choose your base, middle, and top notes. We craft a one-of-a-kind formula — yours forever.</div>
+      <div class="card-price">Rs. 3,500 <span>/ 30ml</span></div>
+      <div class="card-arrow">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.2">
+          <path d="M4 10h12M12 6l4 4-4 4"/>
+        </svg>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════
+     OFFER BANNER
+══════════════════════════════ -->
+<div class="offer-banner reveal">
+  <div>
+    <div class="offer-kicker">Limited Launch Offer</div>
+    <h2 class="offer-headline">Free tester on<br><strong>your first order.</strong></h2>
+    <p class="offer-sub">Order any scent and receive a complimentary 2ml sample of a second fragrance —<br>on us, so you can fall in love before you commit.</p>
+  </div>
+  <button class="offer-cta">
+    Claim Offer →
+  </button>
+</div>
+
+<!-- ══════════════════════════════
+     WHY SCENTCRAFT
+══════════════════════════════ -->
+<section class="section-why">
+  <div class="why-left reveal">
+    <div class="section-eyebrow" style="margin-bottom:16px;">
+      <div class="section-eyebrow-line"></div>
+      <div class="section-eyebrow-text">Why Us</div>
+    </div>
+    <h2 class="why-headline">Luxury<br>should not be<br><em>a privilege.</em></h2>
+    <p class="why-body">
+      Imported brands charge you for a name. We charge you for a fragrance — handcrafted, personalized, and proven to last. ScentCraft was born in Peshawar, built for Pakistan's youth who deserve better.
+    </p>
+    <div class="stat-row">
+      <div class="stat">
+        <div class="stat-num">8<sup>+</sup></div>
+        <div class="stat-label">Hours longevity</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">5×</div>
+        <div class="stat-label">Cheaper than imports</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">100%</div>
+        <div class="stat-label">Customizable</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="why-right reveal reveal-d2">
+    <div class="why-item">
+      <div class="why-item-dot"></div>
+      <div>
+        <div class="why-item-title">Oil-Based Formula</div>
+        <div class="why-item-desc">No alcohol, no fading — pure concentrated perfume oil that lasts 8 to 12 hours on skin and clothes.</div>
+      </div>
+    </div>
+    <div class="why-item">
+      <div class="why-item-dot"></div>
+      <div>
+        <div class="why-item-title">Custom Blending Service</div>
+        <div class="why-item-desc">Tell us your preferred notes — oud, citrus, floral, woody — and we create a formula unique to you.</div>
+      </div>
+    </div>
+    <div class="why-item">
+      <div class="why-item-dot"></div>
+      <div>
+        <div class="why-item-title">Premium Gift Packaging</div>
+        <div class="why-item-desc">Matte glass bottles, custom label, ribbon-tied gift box. Perfect for Eid, birthdays, and weddings.</div>
+      </div>
+    </div>
+    <div class="why-item">
+      <div class="why-item-dot"></div>
+      <div>
+        <div class="why-item-title">Eco-Friendly Refill</div>
+        <div class="why-item-desc">Return your empty bottle, pay 35% less for a refill. Good for your wallet, good for the planet.</div>
+      </div>
+    </div>
+    <div class="why-item">
+      <div class="why-item-dot"></div>
+      <div>
+        <div class="why-item-title">Halal & Skin-Safe</div>
+        <div class="why-item-desc">All oils are alcohol-free, halal-certified, and dermatologist tested — safe for all skin types.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════
+     INSTAGRAM AD MOCKUPS
+══════════════════════════════ -->
+<section class="section-social">
+  <div class="section-header reveal" style="margin-bottom:0;">
+    <div>
+      <div class="section-eyebrow">
+        <div class="section-eyebrow-line"></div>
+        <div class="section-eyebrow-text">Social Media Campaign</div>
+      </div>
+      <h2 class="section-title">Instagram<br><em>Ad Campaign</em></h2>
+    </div>
+    <p class="collection-note" style="text-align:right;">Target: 18–32 · Urban Pakistan · Lifestyle &amp; Fragrance</p>
+  </div>
+
+  <div class="social-grid">
+
+    <!-- IG Post 1 — Launch -->
+    <div class="ig-card reveal reveal-d1">
+      <div class="ig-topbar">
+        <div class="ig-avatar-ring">
+          <div class="ig-avatar-inner">SC</div>
+        </div>
+        <div class="ig-meta">
+          <div class="ig-handle">scentcraft.pk</div>
+          <div class="ig-sp">Sponsored</div>
+        </div>
+        <div class="ig-more">···</div>
+      </div>
+      <div class="ig-img navy-bg">
+        <div class="ig-glow-orb" style="width:200px;height:200px;top:-40px;right:-40px;"></div>
+        <div class="ig-glow-orb" style="width:120px;height:120px;bottom:-20px;left:-20px;"></div>
+        <div class="ig-img-content">
+          <div style="font-size:9px;font-weight:600;letter-spacing:0.2em;text-transform:uppercase;color:#c9a84c;margin-bottom:10px;">New Launch</div>
+          <svg width="60" height="90" viewBox="0 0 60 90" fill="none" style="margin-bottom:12px;">
+            <rect x="22" y="2" width="16" height="10" rx="3" fill="#c9a84c"/>
+            <rect x="25" y="12" width="10" height="7" rx="2" fill="#c9a84c" opacity="0.8"/>
+            <rect x="8" y="19" width="44" height="68" rx="7" stroke="#c9a84c" stroke-width="0.75" fill="rgba(201,168,76,0.06)"/>
+            <rect x="10" y="47" width="40" height="38" rx="6" fill="rgba(201,168,76,0.18)"/>
+            <rect x="14" y="26" width="32" height="36" rx="4" fill="rgba(255,255,255,0.04)" stroke="rgba(201,168,76,0.3)" stroke-width="0.5"/>
+            <text x="30" y="42" font-family="serif" font-size="8" fill="#c9a84c" text-anchor="middle">ScentCraft</text>
+            <rect x="16" y="46" width="28" height="0.5" fill="rgba(201,168,76,0.4)"/>
+            <rect x="14" y="21" width="5" height="24" rx="2.5" fill="rgba(255,255,255,0.06)"/>
+          </svg>
+          <div style="font-family:'Cormorant Garamond',serif;font-size:18px;font-weight:300;color:#fff;text-align:center;line-height:1.2;margin-bottom:6px;">Your signature<br>scent awaits</div>
+          <div style="font-size:8px;color:#c9a84c;letter-spacing:0.15em;text-transform:uppercase;margin-bottom:10px;">From Rs. 2,000</div>
+          <div style="background:#c9a84c;color:#0d1b2e;font-size:9px;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;padding:6px 16px;border-radius:20px;">Shop Now</div>
+        </div>
+      </div>
+      <div class="ig-card-actions">
+        <span class="ig-icon">♡</span>
+        <span class="ig-icon" style="font-size:18px;">💬</span>
+        <span class="ig-icon" style="font-size:17px;">✈</span>
+        <span class="ig-bookmark ig-icon" style="font-size:17px;">🔖</span>
+      </div>
+      <div class="ig-likes">2,847 likes</div>
+      <div class="ig-caption"><b>scentcraft.pk</b> Tired of paying Rs.15,000+ for luxury? Craft yours for Rs.2,000. 8–12 hrs longevity. 100% customizable. DM to order 🌿<br><span class="ig-tags">#ScentCraft #CustomPerfume #PerfumePakistan #AffordableLuxury #OudPerfume</span></div>
+    </div>
+
+    <!-- IG Post 2 — Features -->
+    <div class="ig-card reveal reveal-d2">
+      <div class="ig-topbar">
+        <div class="ig-avatar-ring">
+          <div class="ig-avatar-inner">SC</div>
+        </div>
+        <div class="ig-meta">
+          <div class="ig-handle">scentcraft.pk</div>
+          <div class="ig-sp">Sponsored</div>
+        </div>
+        <div class="ig-more">···</div>
+      </div>
+      <div class="ig-img gold-bg">
+        <div class="ig-img-content">
+          <div style="font-size:9px;font-weight:600;letter-spacing:0.2em;text-transform:uppercase;color:#0d1b2e;opacity:0.6;margin-bottom:8px;">Why ScentCraft?</div>
+          <div style="font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:700;color:#0d1b2e;line-height:1.1;margin-bottom:16px;text-align:center;">5 reasons to<br>switch today</div>
+          <div style="display:flex;flex-direction:column;gap:6px;width:100%;">
+            <div style="background:rgba(13,27,46,0.12);border-radius:6px;padding:6px 10px;display:flex;align-items:center;gap:8px;">
+              <div style="width:5px;height:5px;border-radius:50%;background:#0d1b2e;flex-shrink:0;opacity:0.7;"></div>
+              <span style="font-size:9px;font-weight:600;color:#0d1b2e;">8–12 hour lasting formula</span>
+            </div>
+            <div style="background:rgba(13,27,46,0.12);border-radius:6px;padding:6px 10px;display:flex;align-items:center;gap:8px;">
+              <div style="width:5px;height:5px;border-radius:50%;background:#0d1b2e;flex-shrink:0;opacity:0.7;"></div>
+              <span style="font-size:9px;font-weight:600;color:#0d1b2e;">Fully custom blending</span>
+            </div>
+            <div style="background:rgba(13,27,46,0.12);border-radius:6px;padding:6px 10px;display:flex;align-items:center;gap:8px;">
+              <div style="width:5px;height:5px;border-radius:50%;background:#0d1b2e;flex-shrink:0;opacity:0.7;"></div>
+              <span style="font-size:9px;font-weight:600;color:#0d1b2e;">Premium gift packaging</span>
+            </div>
+            <div style="background:rgba(13,27,46,0.12);border-radius:6px;padding:6px 10px;display:flex;align-items:center;gap:8px;">
+              <div style="width:5px;height:5px;border-radius:50%;background:#0d1b2e;flex-shrink:0;opacity:0.7;"></div>
+              <span style="font-size:9px;font-weight:600;color:#0d1b2e;">Eco-friendly refill service</span>
+            </div>
+            <div style="background:rgba(13,27,46,0.12);border-radius:6px;padding:6px 10px;display:flex;align-items:center;gap:8px;">
+              <div style="width:5px;height:5px;border-radius:50%;background:#0d1b2e;flex-shrink:0;opacity:0.7;"></div>
+              <span style="font-size:9px;font-weight:600;color:#0d1b2e;">Halal certified · Alcohol-free</span>
+            </div>
+          </div>
+          <div style="background:#0d1b2e;color:#c9a84c;font-size:9px;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;padding:7px 18px;border-radius:20px;margin-top:12px;">DM to Order</div>
+        </div>
+      </div>
+      <div class="ig-card-actions">
+        <span class="ig-icon">♡</span>
+        <span class="ig-icon" style="font-size:18px;">💬</span>
+        <span class="ig-icon" style="font-size:17px;">✈</span>
+        <span class="ig-bookmark ig-icon" style="font-size:17px;">🔖</span>
+      </div>
+      <div class="ig-likes">1,934 likes</div>
+      <div class="ig-caption"><b>scentcraft.pk</b> Not all perfumes are made equal 👑 Here's why 2,000+ Pakistanis choose ScentCraft. Link in bio to order!<br><span class="ig-tags">#HandcraftedScent #FragrancePK #StudentDiscount #EcoLuxury #ScentCraft</span></div>
+    </div>
+
+    <!-- IG Post 3 — Offer -->
+    <div class="ig-card reveal reveal-d3">
+      <div class="ig-topbar">
+        <div class="ig-avatar-ring">
+          <div class="ig-avatar-inner">SC</div>
+        </div>
+        <div class="ig-meta">
+          <div class="ig-handle">scentcraft.pk</div>
+          <div class="ig-sp">Sponsored</div>
+        </div>
+        <div class="ig-more">···</div>
+      </div>
+      <div class="ig-img dark-bg">
+        <div class="ig-glow-orb" style="width:180px;height:180px;top:50%;left:50%;transform:translate(-50%,-50%);"></div>
+        <div class="ig-img-content">
+          <div style="font-size:9px;font-weight:600;letter-spacing:0.2em;text-transform:uppercase;color:#c9a84c;margin-bottom:14px;">Limited Offer</div>
+          <div style="font-family:'Cormorant Garamond',serif;font-size:11px;font-weight:300;color:rgba(255,255,255,0.5);letter-spacing:0.2em;text-transform:uppercase;margin-bottom:4px;">Free tester with</div>
+          <div style="font-family:'Cormorant Garamond',serif;font-size:32px;font-weight:300;color:#fff;line-height:1;margin-bottom:4px;">Every</div>
+          <div style="font-family:'Cormorant Garamond',serif;font-size:32px;font-weight:700;color:#c9a84c;line-height:1;margin-bottom:20px;">First Order</div>
+          <div style="width:50px;height:0.5px;background:#c9a84c;opacity:0.5;margin-bottom:14px;"></div>
+          <div style="font-size:10px;font-weight:300;color:rgba(255,255,255,0.5);text-align:center;line-height:1.6;margin-bottom:16px;">Order any fragrance<br>and we'll include a<br>free 2ml tester of<br>your choice</div>
+          <div style="border:0.75px solid #c9a84c;color:#c9a84c;font-size:9px;font-weight:600;letter-spacing:0.15em;text-transform:uppercase;padding:7px 20px;border-radius:20px;">Claim Now</div>
+        </div>
+      </div>
+      <div class="ig-card-actions">
+        <span class="ig-icon">♡</span>
+        <span class="ig-icon" style="font-size:18px;">💬</span>
+        <span class="ig-icon" style="font-size:17px;">✈</span>
+        <span class="ig-bookmark ig-icon" style="font-size:17px;">🔖</span>
+      </div>
+      <div class="ig-likes">3,210 likes</div>
+      <div class="ig-caption"><b>scentcraft.pk</b> Your first order comes with a free surprise tester 🎁 Because we want you to fall in love before you commit. DM "FIRST" to claim!<br><span class="ig-tags">#ScentCraft #FreeGift #CustomPerfumePakistan #GiftForHer #GiftForHim</span></div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ══════════════════════════════
+     FOOTER CTA
+══════════════════════════════ -->
+<section class="section-footer">
+  <div class="reveal">
+    <div class="footer-brand">Scent<em>Craft</em></div>
+    <div class="footer-tagline">Your Scent. Your Story. · Pakistan</div>
+    <div class="footer-contact">
+      <div class="footer-contact-item">
+        <div class="footer-contact-dot"></div>
+        Instagram: @scentcraft.pk
+      </div>
+      <div class="footer-contact-item">
+        <div class="footer-contact-dot"></div>
+        WhatsApp: +92 300 0000000
+      </div>
+      <div class="footer-contact-item">
+        <div class="footer-contact-dot"></div>
+        Website: scentcraft.pk
+      </div>
+      <div class="footer-contact-item">
+        <div class="footer-contact-dot"></div>
+        Peshawar, KPK, Pakistan · Ships Nationwide
+      </div>
+    </div>
+  </div>
+
+  <div class="footer-right reveal reveal-d2">
+    <div class="footer-cta-label">Ready to craft<br><em>your scent?</em></div>
+    <button class="footer-cta-btn">
+      DM Us on Instagram →
+    </button>
+    <button class="footer-cta-btn" style="background:transparent;color:var(--gold);border:0.75px solid var(--gold);">
+      WhatsApp Order →
+    </button>
+  </div>
+
+  <div class="footer-bottom">
+    <div class="footer-copy">© 2026 ScentCraft · Custom Fragrance Studio · Peshawar, Pakistan</div>
+    <div class="footer-info">
+      Assignment #5 · My First Advertisement<br>
+      Mubasher Shahzad (22P-9002) &amp; Muhammad Tayyab (22P-9279) · BAI-8A · FAST NUCES
+    </div>
+  </div>
+</section>
+
+<script>
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); } });
+  }, { threshold: 0.12 });
+  reveals.forEach(el => observer.observe(el));
+</script>
+
+</body>
+</html>
